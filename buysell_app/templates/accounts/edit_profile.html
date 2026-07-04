@@ -1,0 +1,202 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container py-5">
+
+  <div class="edit-card">
+
+    <h2>
+      Edit Profile
+    </h2>
+
+    <form method="POST" enctype="multipart/form-data">
+
+      {% csrf_token %}
+
+      <div class="text-center mb-4">
+
+        {% if profile.profile_photo %}
+
+        <img src="{{ profile.profile_photo.url }}" class="profile-preview">
+
+        {% else %}
+
+        <div class="profile-avatar">
+
+          {{ request.user.first_name|first|upper }}
+
+        </div>
+
+        {% endif %}
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>
+          First Name
+        </label>
+
+        <input type="text" name="first_name" class="form-control" value="{{ request.user.first_name }}" required>
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>
+          Last Name
+        </label>
+
+        <input type="text" name="last_name" class="form-control" value="{{ request.user.last_name }}" required>
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>
+          Email
+        </label>
+
+        <input type="email" name="email" class="form-control" value="{{ request.user.email }}" required>
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>
+          Mobile Number
+        </label>
+
+        {{ form.mobile }}
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>
+          Upload New Photo
+        </label>
+
+        {{ form.profile_photo }}
+
+      </div>
+
+      {% if profile.profile_photo %}
+
+      <div class="form-check mb-3">
+
+        {{ form.delete_photo }}
+
+        <label class="form-check-label">
+
+          Delete Current Photo
+
+        </label>
+
+      </div>
+
+      {% endif %}
+
+      <button type="submit" class="btn btn-success w-100">
+
+        Update Profile
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+<style>
+  body {
+
+    background: #f2f4f5;
+  }
+
+  .edit-card {
+
+    max-width: 700px;
+
+    margin: auto;
+
+    background: white;
+
+    padding: 35px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
+  }
+
+  .edit-card h2 {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+    font-weight: 700;
+  }
+
+  .profile-preview {
+
+    width: 140px;
+
+    height: 140px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 4px solid #198754;
+  }
+
+  .profile-avatar {
+
+    width: 140px;
+
+    height: 140px;
+
+    border-radius: 50%;
+
+    background: #198754;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: auto;
+
+    font-size: 60px;
+
+    font-weight: 700;
+  }
+
+  .form-control {
+
+    height: 50px;
+  }
+
+  @media(max-width:768px) {
+
+    .edit-card {
+
+      padding: 20px;
+    }
+
+    .profile-preview,
+    .profile-avatar {
+
+      width: 110px;
+
+      height: 110px;
+    }
+  }
+</style>
+
+{% endblock %}

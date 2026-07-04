@@ -1,0 +1,202 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container py-5">
+
+  <div class="row justify-content-center">
+
+    <div class="col-lg-6">
+
+      <div class="success-card">
+
+        <div class="success-icon">
+
+          ✔
+
+        </div>
+
+        <h2>
+
+          Payment Successful
+
+        </h2>
+
+        <p>
+
+          Congratulations!
+
+          Your subscription has been activated successfully.
+
+        </p>
+
+        <hr>
+
+        <div class="subscription-details">
+
+          <div class="detail-row">
+
+            <span>Plan</span>
+
+            <strong>
+
+              {{ subscription.plan.name }}
+
+            </strong>
+
+          </div>
+
+          <div class="detail-row">
+
+            <span>Price</span>
+
+            <strong>
+
+              ₹{{ subscription.plan.price }}
+
+            </strong>
+
+          </div>
+
+          <div class="detail-row">
+
+            <span>Valid Till</span>
+
+            <strong>
+
+              {{ subscription.end_date|date:"d M Y" }}
+
+            </strong>
+
+          </div>
+
+        </div>
+
+        <a href="{% url 'home' %}" class="continue-btn">
+
+          Continue Shopping
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+  body {
+
+    background: #f5f7fa;
+
+  }
+
+  .success-card {
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+
+    text-align: center;
+
+  }
+
+  .success-icon {
+
+    width: 100px;
+
+    height: 100px;
+
+    background: #198754;
+
+    color: white;
+
+    font-size: 50px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: auto;
+
+    margin-bottom: 25px;
+
+  }
+
+  .subscription-details {
+
+    margin: 30px 0;
+
+  }
+
+  .detail-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #eee;
+
+    font-size: 18px;
+
+  }
+
+  .continue-btn {
+
+    display: block;
+
+    background: #198754;
+
+    color: white;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    margin-top: 30px;
+
+    transition: .3s;
+
+  }
+
+  .continue-btn:hover {
+
+    background: #146c43;
+
+    color: white;
+
+  }
+
+  @media(max-width:768px) {
+
+    .success-card {
+
+      padding: 25px;
+
+    }
+
+    .detail-row {
+
+      font-size: 16px;
+
+    }
+
+  }
+</style>
+
+{% endblock %}

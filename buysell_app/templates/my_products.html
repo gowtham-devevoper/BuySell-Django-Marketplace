@@ -1,0 +1,318 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container py-4">
+
+  <div class="page-header">
+
+    <h2>
+      My Products
+    </h2>
+
+    <p>
+      Manage your posted ads
+    </p>
+
+  </div>
+
+  <div class="row">
+
+    
+
+    {% for product in products %}
+
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
+
+      <div class="product-card">
+
+        {% if product.images.first %}
+        <img src="{{ product.images.first.image.url }}" class="product-image">
+        {% endif %}
+
+        <div class="product-body">
+
+          <h4 class="price">
+            ₹ {{ product.price|floatformat:0 }}
+          </h4>
+
+          <!-- Product Title -->
+
+          {% if product.cardetails %}
+
+          <h5 class="title">
+            {{ product.cardetails.brand }}
+            {{ product.cardetails.model }}
+          </h5>
+
+          {% elif product.motorcycledetails %}
+
+          <h5 class="title">
+            {{ product.motorcycledetails.brand }}
+            {{ product.motorcycledetails.model }}
+          </h5>
+
+          {% elif product.scooterdetails %}
+
+          <h5 class="title">
+            {{ product.scooterdetails.brand }}
+            {{ product.scooterdetails.model }}
+          </h5>
+
+          {% elif product.bicycledetails %}
+
+          <h5 class="title">
+            {{ product.bicycledetails.brand }}
+            {{ product.bicycledetails.model }}
+          </h5>
+
+          {% elif product.houseapartmentdetails %}
+
+          <h5 class="title">
+            {{ product.houseapartmentdetails.property_type }}
+          </h5>
+
+          {% elif product.mobiledetails %}
+
+          <h5 class="title">
+            {{ product.mobiledetails.brand }}
+            {{ product.mobiledetails.model }}
+          </h5>
+
+          {% elif product.laptopdetails %}
+
+          <h5 class="title">
+            {{ product.laptopdetails.brand }}
+            {{ product.laptopdetails.model }}
+          </h5>
+
+          {% else %}
+
+          <h5 class="title">
+            {{ product.title }}
+          </h5>
+
+          {% endif %}
+
+          <div class="location">
+            📍 {{ product.district }}, {{ product.state }}
+          </div>
+
+          <div class="date">
+            {{ product.created_at|date:"d M Y" }}
+          </div>
+
+          <div class="btn-group-custom">
+
+            <!-- View Button -->
+
+            {% if product.cardetails %}
+
+            <a href="{% url 'car_product_detail' product.id %}" class="btn btn-success">
+              View
+            </a>
+
+            {% elif product.motorcycledetails %}
+
+            <a href="{% url 'motorcycle_product_detail' product.id %}" class="btn btn-success">
+              View
+            </a>
+
+            {% elif product.scooterdetails %}
+
+            <a href="{% url 'scooter_product_detail' product.id %}" class="btn btn-success">
+              View
+            </a>
+
+            {% elif product.bicycledetails %}
+
+            <a href="{% url 'bicycle_product_detail' product.id %}" class="btn btn-success">
+              View
+            </a>
+
+            {% elif product.houseapartmentdetails %}
+
+            <a href="{% url 'house_product_detail' product.id %}" class="btn btn-success">
+              View
+            </a>
+
+            {% elif product.mobiledetails %}
+
+            <a href="{% url 'mobile_product_detail' product.id %}" class="btn btn-success">
+              View
+            </a>
+
+            {% elif product.laptopdetails %}
+
+            <a href="{% url 'laptop_product_detail' product.id %}" class="btn btn-success">
+              View
+            </a>
+
+            {% endif %}
+
+            <a href="{% url 'edit_product' product.id %}" class="btn btn-warning">
+              Edit
+            </a>
+
+            <a href="{% url 'delete_product' product.id %}" class="btn btn-danger">
+              Delete
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="col-12">
+
+      <div class="empty-box">
+
+        <h3>No Products Found</h3>
+
+        <p>Post your first product.</p>
+
+        <a href="{% url 'sell' %}" class="btn btn-success">
+          Post Product
+        </a>
+
+      </div>
+
+    </div>
+
+    {% endfor %}
+
+  </div>
+
+</div>
+
+<style>
+  body {
+    background: #f2f4f5;
+  }
+
+  .page-header {
+    margin-bottom: 25px;
+  }
+
+  .page-header h2 {
+    font-weight: 700;
+  }
+
+  .product-card {
+
+    background: white;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    border: 1px solid #ddd;
+
+    transition: .3s;
+
+    height: 100%;
+  }
+
+  .product-card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+  }
+
+  .product-image {
+
+    width: 100%;
+
+    height: 220px;
+
+    object-fit: cover;
+  }
+
+  .product-body {
+
+    padding: 15px;
+  }
+
+  .price {
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+    color: #198754;
+  }
+
+  .title {
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    min-height: 50px;
+  }
+
+  .info {
+
+    color: #666;
+  }
+
+  .location {
+
+    color: #777;
+
+    margin-bottom: 5px;
+  }
+
+  .date {
+
+    font-size: 13px;
+
+    color: #999;
+
+    margin-bottom: 15px;
+  }
+
+  .btn-group-custom {
+
+    display: flex;
+
+    gap: 8px;
+  }
+
+  .btn-group-custom .btn {
+
+    flex: 1;
+  }
+
+  .empty-box {
+
+    background: white;
+
+    padding: 50px;
+
+    border-radius: 15px;
+
+    text-align: center;
+  }
+
+  @media(max-width:768px) {
+
+    .product-image {
+
+      height: 180px;
+    }
+
+    .btn-group-custom {
+
+      flex-direction: column;
+    }
+
+  }
+</style>
+
+{% endblock %}

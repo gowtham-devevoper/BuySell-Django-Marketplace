@@ -1,0 +1,261 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container py-5">
+
+  <div class="row justify-content-center">
+
+    <div class="col-lg-6">
+
+      <div class="payment-card">
+
+        <h2 class="text-center mb-4">
+
+          Complete Your Payment
+
+        </h2>
+
+        <hr>
+
+        <div class="plan-box">
+
+          <h3>
+
+            {{ plan.name }}
+
+          </h3>
+
+          <h1>
+
+            ₹{{ plan.price }}
+
+          </h1>
+
+          <p>
+
+            Valid for {{ plan.duration_days }} Days
+
+          </p>
+
+        </div>
+
+        <div class="features">
+
+          <div>✔ Unlimited Seller Contact Unlock</div>
+
+          <div>✔ Unlimited Chat</div>
+
+          <div>✔ Instant Activation</div>
+
+          <div>✔ Secure Payment</div>
+
+        </div>
+
+        <hr>
+
+        <div class="payment-method">
+
+          <h5>
+
+            Payment Method
+
+          </h5>
+
+          <div class="method active">
+
+            💳 Demo Payment
+
+          </div>
+
+        </div>
+
+        <a href="{% url 'payment_success' plan.id %}" class="pay-btn">
+
+          Pay ₹{{ plan.price }}
+
+        </a>
+
+        <div class="safe-text">
+
+          🔒 This is a Demo Payment.
+          Razorpay integration will be added later.
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+  body {
+
+    background: #f5f7fa;
+
+  }
+
+  .payment-card {
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 35px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
+
+  }
+
+  .plan-box {
+
+    text-align: center;
+
+    padding: 25px;
+
+    background: #f7fff8;
+
+    border-radius: 15px;
+
+    margin-bottom: 25px;
+
+  }
+
+  .plan-box h3 {
+
+    color: #198754;
+
+    font-weight: 700;
+
+  }
+
+  .plan-box h1 {
+
+    font-size: 52px;
+
+    font-weight: bold;
+
+    margin: 15px 0;
+
+  }
+
+  .plan-box p {
+
+    color: #666;
+
+  }
+
+  .features {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin: 25px 0;
+
+  }
+
+  .features div {
+
+    padding: 12px;
+
+    background: #fafafa;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+  }
+
+  .payment-method {
+
+    margin: 30px 0;
+
+  }
+
+  .method {
+
+    padding: 15px;
+
+    border: 2px solid #198754;
+
+    border-radius: 10px;
+
+    font-weight: bold;
+
+    text-align: center;
+
+    background: #ecfff2;
+
+  }
+
+  .pay-btn {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 15px;
+
+    background: #198754;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    transition: .3s;
+
+    margin-top: 25px;
+
+  }
+
+  .pay-btn:hover {
+
+    background: #146c43;
+
+    color: white;
+
+  }
+
+  .safe-text {
+
+    margin-top: 18px;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 14px;
+
+  }
+
+  @media(max-width:768px) {
+
+    .payment-card {
+
+      padding: 22px;
+
+    }
+
+    .plan-box h1 {
+
+      font-size: 42px;
+
+    }
+
+  }
+</style>
+
+{% endblock %}

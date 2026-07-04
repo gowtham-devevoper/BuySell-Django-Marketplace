@@ -1,0 +1,244 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container py-4">
+
+  <h2 class="fw-bold mb-4">
+
+    My Chats
+
+  </h2>
+
+  {% if rooms %}
+
+  <div class="chat-list">
+
+    {% for room in rooms %}
+
+    <a href="{% url 'chat_room' room.id %}" class="chat-card">
+
+      <!-- Seller Image -->
+
+      <div class="chat-avatar">
+
+        {% if user == room.seller %}
+
+        {{ room.buyer.first_name|first|upper }}
+
+        {% else %}
+
+        {{ room.seller.first_name|first|upper }}
+
+        {% endif %}
+
+      </div>
+
+      <!-- Chat Details -->
+
+      <div class="chat-details">
+
+        <h5>
+
+          {% if user == room.seller %}
+
+          {{ room.buyer.first_name }}
+
+          {{ room.buyer.last_name }}
+
+          {% else %}
+
+          {{ room.seller.first_name }}
+
+          {{ room.seller.last_name }}
+
+          {% endif %}
+
+        </h5>
+
+        <p>
+
+          {{ room.product.title }}
+
+        </p>
+
+        {% with room.messages.last as last %}
+
+        {% if last %}
+
+        <small>
+
+          {{ last.message|truncatechars:35 }}
+
+        </small>
+
+        {% endif %}
+
+        {% endwith %}
+
+      </div>
+
+      <!-- Time -->
+
+      <div class="chat-time">
+
+        {% with room.messages.last as last %}
+
+        {% if last %}
+
+        {{ last.created_at|date:"d M" }}
+
+        {% endif %}
+
+        {% endwith %}
+
+      </div>
+
+    </a>
+
+    {% endfor %}
+
+  </div>
+
+  {% else %}
+
+  <div class="alert alert-info">
+
+    No Chats Yet
+
+  </div>
+
+  {% endif %}
+
+</div>
+
+<style>
+  .chat-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+  }
+
+  .chat-card {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: white;
+
+    padding: 18px;
+
+    border-radius: 14px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+
+    text-decoration: none;
+
+    transition: .3s;
+
+    color: black;
+
+  }
+
+  .chat-card:hover {
+
+    transform: translateY(-3px);
+
+  }
+
+  .chat-avatar {
+
+    width: 65px;
+
+    height: 65px;
+
+    border-radius: 50%;
+
+    background: #198754;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 26px;
+
+    font-weight: bold;
+
+    margin-right: 20px;
+
+  }
+
+  .chat-details {
+
+    flex: 1;
+
+  }
+
+  .chat-details h5 {
+
+    margin: 0;
+
+    font-weight: 700;
+
+  }
+
+  .chat-details p {
+
+    margin: 4px 0;
+
+    color: #666;
+
+  }
+
+  .chat-details small {
+
+    color: #999;
+
+  }
+
+  .chat-time {
+
+    font-size: 13px;
+
+    color: #888;
+
+  }
+
+  @media(max-width:768px) {
+
+    .chat-card {
+
+      padding: 14px;
+
+    }
+
+    .chat-avatar {
+
+      width: 50px;
+
+      height: 50px;
+
+      font-size: 20px;
+
+    }
+
+    .chat-details h5 {
+
+      font-size: 16px;
+
+    }
+
+  }
+</style>
+
+{% endblock %}

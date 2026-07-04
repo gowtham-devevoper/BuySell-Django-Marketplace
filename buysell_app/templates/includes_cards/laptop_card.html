@@ -1,0 +1,71 @@
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
+
+  <div class="car-card">
+
+    <!-- Wishlist -->
+
+    <a href="{% url 'toggle_wishlist' product.id %}" class="wishlist-btn">
+
+      {% if product.id in wishlist_products %}
+
+      <i class="bi bi-heart-fill text-danger"></i>
+
+      {% else %}
+
+      <i class="bi bi-heart"></i>
+
+      {% endif %}
+
+    </a>
+
+    <!-- Image -->
+
+    {% if product.images.first %}
+
+    <img src="{{ product.images.first.image.url }}" class="car-image">
+
+    {% endif %}
+
+    <div class="car-body">
+
+      <h6 class="car-price">
+
+        ₹ {{ product.price|floatformat:0 }}
+
+      </h6>
+
+      <h5 class="car-title">
+
+        {{ product.laptopdetails.brand }}
+        {{ product.laptopdetails.model }}
+
+      </h5>
+
+      <div class="car-footer">
+
+        <span>
+
+          {{ product.district }},
+          {{ product.state }}
+
+        </span>
+
+        <span>
+
+          {{ product.created_at|date:"d M" }}
+
+        </span>
+
+      </div>
+
+      <a href="{% url 'laptop_product_detail' product.id %}" class="view-btn">
+
+        View Details
+
+      </a>
+
+    </div>
+
+  </div>
+
+</div>

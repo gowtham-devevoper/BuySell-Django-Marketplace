@@ -1,0 +1,260 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<section>
+  <div class="container py-5">
+
+    <h2 class="text-center fw-bold mb-4">
+      Choose Category
+    </h2>
+
+    <div class="row align-items-start">
+
+      <!-- LEFT -->
+
+      <div class="col-md-5">
+
+        <div class="list-group">
+
+          {% for category in categories %}
+
+          <button class="list-group-item list-group-item-action category-btn" data-target="cat{{ category.id }}">
+            {{ category.name }}
+          </button>
+
+          {% endfor %}
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="col-md-7">
+
+        {% for category in categories %}
+
+        <div id="cat{{ category.id }}" class="subcategory-box {% if not forloop.first %} d-none {% endif %}">
+
+          <h4 class="mb-3">
+            {{ category.name }}
+          </h4>
+
+          <div class="list-group">
+
+            {% for sub in category.subcategories.all %}
+
+            <!-- Cars -->
+
+            {% if category.name == "Cars" %}
+
+            <a href="{% url 'car_create' sub.id %}" class="list-group-item list-group-item-action mb-2">
+              {{ sub.name }}
+            </a>
+
+            <!-- Bikes -->
+
+            {% elif category.name == "Bikes" %}
+
+            {% if sub.name == "Motorcycles" %}
+
+            <a href="{% url 'motorcycle_create' sub.id %}" class="list-group-item list-group-item-action mb-2">
+
+              {{ sub.name }}
+
+            </a>
+
+            {% elif sub.name == "Scooters" %}
+
+            <a href="{% url 'scooter_create' sub.id %}" class="list-group-item list-group-item-action mb-2">
+
+              {{ sub.name }}
+
+            </a>
+
+            {% elif sub.name == "Bicycles" %}
+
+            <a href="{% url 'bicycle_create' sub.id %}" class="list-group-item list-group-item-action mb-2">
+
+              {{ sub.name }}
+
+            </a>
+
+            {% endif %}
+
+            {% elif category.name == "Properties" %}
+            
+            {% if sub.name == "For Sale & Rent : House & Apartments" %}
+            
+            <a href="{% url 'house_apartment_create' sub.id %}" class="list-group-item list-group-item-action mb-2">
+              {{ sub.name }}
+            </a>
+            
+            {% endif %}
+
+            <!-- Mobiles -->
+            
+            {% elif sub.name == "Mobiles" %}
+            
+            <a href="{% url 'mobile_create' sub.id %}" class="list-group-item list-group-item-action mb-2">
+              {{ sub.name }}
+            </a>
+            
+            <!-- Laptops -->
+            
+            {% elif sub.name == "Laptops" %}
+            
+            <a href="{% url 'laptop_create' sub.id %}" class="list-group-item list-group-item-action mb-2">
+              {{ sub.name }}
+            </a>
+            
+            <!-- Other Categories -->
+            
+            {% else %}
+            
+            <a href="#" class="list-group-item list-group-item-action mb-2">
+              {{ sub.name }}
+            </a>
+            
+            {% endif %}
+            
+            {% endfor %}
+
+          </div>
+
+        </div>
+
+        {% endfor %}
+
+      </div>
+
+    </div>
+
+  </div>
+  
+</section>
+
+
+<script>
+
+  const buttons = document.querySelectorAll(
+    '.category-btn'
+  );
+
+  const boxes = document.querySelectorAll(
+    '.subcategory-box'
+  );
+
+  buttons.forEach(btn => {
+
+    btn.addEventListener('click', function () {
+
+      boxes.forEach(box => {
+
+        box.classList.add('d-none');
+
+      });
+
+      const target = document.getElementById(
+        this.dataset.target
+      );
+
+      if (target) {
+
+        target.classList.remove(
+          'd-none'
+        );
+
+      }
+
+    });
+
+  });
+
+</script>
+
+<style>
+  /* Desktop */
+
+  .category-btn {
+    font-size: 18px;
+    padding: 15px;
+  }
+
+  .subcategory-box {
+    min-height: 500px;
+  }
+
+  .subcategory-box h4 {
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .subcategory-box a {
+    font-size: 18px;
+  }
+
+  /* Tablet */
+
+  @media(max-width:768px) {
+
+    .container {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .category-btn {
+      font-size: 16px;
+      padding: 12px;
+    }
+
+    .subcategory-box {
+      margin-top: 20px;
+      min-height: auto;
+    }
+
+    .subcategory-box h4 {
+      font-size: 26px;
+    }
+
+    .subcategory-box a {
+      font-size: 16px;
+    }
+
+  }
+
+  /* Mobile */
+
+  @media(max-width:576px) {
+
+    h2 {
+      font-size: 28px;
+    }
+
+    .row {
+      gap: 15px;
+    }
+
+    .category-btn {
+      font-size: 15px;
+      padding: 10px;
+    }
+
+    .subcategory-box {
+      min-height: auto;
+    }
+
+    .subcategory-box h4 {
+      font-size: 22px;
+      text-align: center;
+    }
+
+    .subcategory-box a {
+      font-size: 15px;
+      padding: 12px;
+    }
+
+  }
+</style>
+
+{% endblock %}

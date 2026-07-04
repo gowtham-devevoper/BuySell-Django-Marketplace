@@ -1,0 +1,307 @@
+<footer class="footer-section mt-5">
+
+  <div class="container">
+
+    <div class="row gy-4">
+
+      <!-- Logo -->
+
+      <div class="col-lg-4 col-md-6">
+
+        <h2 class="footer-logo">
+          BuySell
+        </h2>
+
+        <p class="footer-text">
+
+          BuySell is India's trusted marketplace to buy and sell
+          Cars, Bikes, Mobiles, Laptops, Properties and much more.
+
+          Safe • Secure • Easy
+
+        </p>
+
+      </div>
+
+      <!-- Quick Links -->
+
+      <div class="col-lg-2 col-md-6">
+
+        <h5>
+          Quick Links
+        </h5>
+
+        <ul class="footer-links">
+
+          <li>
+            <a href="{% url 'home' %}">
+              Home
+            </a>
+          </li>
+
+          <li>
+            <a href="{% url 'sell' %}">
+              Sell Product
+            </a>
+          </li>
+
+          <li>
+            <a href="{% url 'subscription_plans' %}">
+              Go Premium
+            </a>
+          </li>
+
+          <li>
+            <a href="{% url 'my_wishlist' %}">
+              Wishlist
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+      <!-- Categories -->
+
+      <div class="col-lg-3 col-md-6">
+
+        <h5>
+          Categories
+        </h5>
+
+        <ul class="footer-links">
+
+          <li>Cars</li>
+
+          <li>Bikes</li>
+
+          <li>Mobiles</li>
+
+          <li>Laptops</li>
+
+          <li>Properties</li>
+
+        </ul>
+
+      </div>
+
+      <!-- Contact -->
+
+      <div class="col-lg-3 col-md-6">
+
+        <h5>
+          Contact
+        </h5>
+
+        <p>
+
+          <i class="bi bi-envelope-fill"></i>
+
+          support@buysell.com
+
+        </p>
+
+        <p>
+
+          <i class="bi bi-telephone-fill"></i>
+
+          +91 9876543210
+
+        </p>
+
+        <p>
+
+          <i class="bi bi-geo-alt-fill"></i>
+
+          Tamil Nadu, India
+
+        </p>
+
+        <div class="social-icons">
+
+          <a href="#">
+            <i class="bi bi-facebook"></i>
+          </a>
+
+          <a href="#">
+            <i class="bi bi-instagram"></i>
+          </a>
+
+          <a href="#">
+            <i class="bi bi-twitter-x"></i>
+          </a>
+
+          <a href="#">
+            <i class="bi bi-linkedin"></i>
+          </a>
+
+          <a href="#">
+            <i class="bi bi-youtube"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <hr>
+
+    <div class="copyright">
+
+      © 2026 BuySell. All Rights Reserved.
+
+    </div>
+
+  </div>
+
+</footer>
+
+<style>
+  .footer-section {
+
+    background: #002f34;
+
+    color: white;
+
+    padding: 60px 0 20px;
+  }
+
+  .footer-logo {
+
+    font-size: 34px;
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+  }
+
+  .footer-text {
+
+    color: #d7d7d7;
+
+    line-height: 1.9;
+  }
+
+  .footer-section h5 {
+
+    margin-bottom: 20px;
+
+    font-weight: 700;
+  }
+
+  .footer-links {
+
+    list-style: none;
+
+    padding: 0;
+
+    margin: 0;
+  }
+
+  .footer-links li {
+
+    margin-bottom: 12px;
+  }
+
+  .footer-links a {
+
+    text-decoration: none;
+
+    color: #d7d7d7;
+
+    transition: .3s;
+  }
+
+  .footer-links a:hover {
+
+    color: #23e5db;
+
+    padding-left: 5px;
+  }
+
+  .footer-section p {
+
+    color: #d7d7d7;
+
+    margin-bottom: 12px;
+  }
+
+  .footer-section i {
+
+    margin-right: 8px;
+  }
+
+  .social-icons {
+
+    margin-top: 20px;
+
+    display: flex;
+
+    gap: 15px;
+  }
+
+  .social-icons a {
+
+    width: 42px;
+
+    height: 42px;
+
+    background: #0b4c52;
+
+    color: white;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-decoration: none;
+
+    font-size: 20px;
+
+    transition: .3s;
+  }
+
+  .social-icons a:hover {
+
+    background: #23e5db;
+
+    color: #002f34;
+
+    transform: translateY(-5px);
+  }
+
+  .footer-section hr {
+
+    border-color: rgba(255, 255, 255, .2);
+
+    margin: 40px 0 20px;
+  }
+
+  .copyright {
+
+    text-align: center;
+
+    color: #cfcfcf;
+
+    font-size: 15px;
+  }
+
+  @media(max-width:768px) {
+
+    .footer-section {
+
+      text-align: center;
+    }
+
+    .social-icons {
+
+      justify-content: center;
+    }
+
+  }
+</style>

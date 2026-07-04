@@ -1,0 +1,84 @@
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
+
+  <div class="bike-card">
+
+    <!-- Wishlist -->
+
+    <a href="{% url 'toggle_wishlist' product.id %}" class="wishlist-btn">
+
+      {% if product.id in wishlist_products %}
+
+      <i class="bi bi-heart-fill text-danger"></i>
+
+      {% else %}
+
+      <i class="bi bi-heart"></i>
+
+      {% endif %}
+
+    </a>
+
+    <!-- Bicycle Image -->
+
+    {% if product.images.first %}
+
+    <img src="{{ product.images.first.image.url }}" class="bike-image">
+
+    {% endif %}
+
+    <!-- Bicycle Content -->
+
+    <div class="bike-body">
+
+      <!-- Price -->
+
+      <h4 class="bike-price">
+
+        ₹ {{ product.price|floatformat:0 }}
+
+      </h4>
+
+      <!-- Brand + Model -->
+
+      <h5 class="bike-title">
+
+        {{ product.motorcycledetails.brand }}
+        {{ product.motorcycledetails.model }}
+
+      </h5>
+
+      <!-- Footer -->
+
+      <div class="bike-footer">
+
+        <span>
+
+          {{ product.district }},
+          {{ product.state }}
+
+        </span>
+
+        <span>
+
+          {{ product.created_at|date:"d M" }}
+
+        </span>
+
+      </div>  
+
+
+
+
+      <!-- Button -->
+
+      <a href="{% url 'motorcycle_product_detail' product.id %}" class="bike-btn">
+
+        View Details
+
+      </a>
+
+    </div>
+
+  </div>
+
+</div>

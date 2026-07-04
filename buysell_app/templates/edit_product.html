@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container mt-5">
+
+  <h2>Edit Product</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <h4>Current Images</h4>
+
+    <div class="row">
+
+      {% for image in product.images.all %}
+
+      <div class="col-md-3 mb-3">
+
+        <img src="{{ image.image.url }}" class="img-fluid rounded">
+
+        <a href="{% url 'delete_image' image.id %}" class="btn btn-danger btn-sm w-100 mt-2">
+
+          Delete Image
+
+        </a>
+
+      </div>
+
+      {% endfor %}
+
+    </div>
+
+    <div class="mb-3">
+
+      <label>
+
+        Upload New Images
+
+      </label>
+
+      <input type="file" name="images" multiple class="form-control">
+
+    </div>
+
+    <button type="submit" class="btn btn-success">
+
+      Update Product
+
+    </button>
+
+  </form>
+
+</div>
+
+{% endblock %}

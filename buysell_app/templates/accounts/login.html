@@ -1,0 +1,93 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7 col-sm-10">
+      <div class="login-card">
+        <h2 class="text-center mb-4">Login</h2>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div>
+            <input type="email" name="email" class="form-control mb-3"
+            placeholder="Enter Email"
+            required>          
+          </div>
+          <div class="mb-3">
+            <input type="password"
+            name="password"
+            class="form-control"
+            placeholder="Password"
+            required>
+          </div>
+          <button type="submit" class="btn login-btn w-100">Login</button>
+        </form>
+        {% for message in masseges %}
+        <div class="alert alert-danger mt-3">
+          {{ message }}
+        </div>
+        {% endfor %}
+        
+        <p class="text-center mt-4 mb-0">
+          Don't have an account ?
+          <a href="{% url 'register' %}">Register</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .login-card{
+    background:#fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.1);
+  }
+  .login-card h2 {
+    font-weight: 700;
+  }
+  .form-control{
+    height: 50px;
+    border-radius:10px;
+  }
+  .login-btn{
+    height:50px;
+    border-radius: 10px;
+    background: #198754;
+    border: none;
+    font-weight:600;
+  }
+  .login-btn:hover{
+    background: #146c43;
+  }
+  @media(max-width:768px){
+    .login-card{
+      padding: 25px;
+    }
+    .login-card h2{
+      font-size: 28px;
+    }
+  @media(max-width:480px){
+    .container{
+      padding-left:15px;
+      padding-right: 15px;
+    }
+    .login-card{
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .login-card h2{
+      font-size:24px
+    }
+    .form-control{
+      height: 45px;
+      font-size: 14px;
+    }
+    .login-btn{
+      height: 45px;
+      font-size: 14px;
+    }
+  }
+  }
+</style>
+{% endblock %}

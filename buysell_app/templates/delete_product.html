@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container mt-5">
+
+  <div class="card p-4 text-center">
+
+    <h3>
+
+      Delete Product
+
+    </h3>
+
+    <p>
+
+      Are you sure ?
+
+    </p>
+
+    <form method="POST">
+
+      {% csrf_token %}
+
+      <button type="submit" class="btn btn-danger">
+
+        Delete
+
+      </button>
+
+      <a href="{% url 'my_products' %}" class="btn btn-secondary">
+
+        Cancel
+
+      </a>
+
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

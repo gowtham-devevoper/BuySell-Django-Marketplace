@@ -1,0 +1,163 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container py-5">
+
+  <div class="text-center mb-5">
+
+    <h1 class="fw-bold">
+      Unlock Seller Contact
+    </h1>
+
+    <p class="text-muted">
+      Choose a subscription plan to view seller phone numbers.
+    </p>
+
+  </div>
+
+  <div class="row g-4">
+
+    {% for plan in plans %}
+    
+    <div class="col-lg-3 col-md-6">
+
+      <div class="plan-card">
+
+        <div class="plan-name">
+
+          {{ plan.name }}
+
+        </div>
+
+        <div class="plan-price">
+
+          ₹{{ plan.price }}
+
+        </div>
+
+        <div class="plan-days">
+
+          {{ plan.duration_days }} Days
+
+        </div>
+
+        <hr>
+
+        <ul>
+
+          <li>✔ Unlimited Contact Unlock</li>
+
+          <li>✔ Instant Access</li>
+
+          <li>✔ Safe & Secure</li>
+
+          <li>✔ Premium Support</li>
+
+        </ul>
+
+        <p class="plan-desc">
+
+          {{ plan.description }}
+
+        </p>
+
+        <a href="{% url 'subscribe_plan' plan.id %}" class="subscribe-btn">
+
+          Subscribe Now
+
+        </a>
+
+      </div>
+
+    </div>
+
+    {% endfor %}
+
+  </div>
+
+</div>
+
+<style>
+  
+  body {
+    background: #f4f6f8;
+  }
+
+  .plan-card {
+    background: white;
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+    transition: .35s;
+    height: 100%;
+    border: 2px solid transparent;
+  }
+
+  .plan-card:hover {
+    transform: translateY(-8px);
+    border-color: #198754;
+  }
+
+  .plan-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #198754;
+  }
+
+  .plan-price {
+    font-size: 42px;
+    font-weight: bold;
+    margin: 15px 0;
+  }
+
+  .plan-days {
+    color: #666;
+    font-size: 15px;
+    margin-bottom: 15px;
+  }
+
+  .plan-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+
+  .plan-card li {
+    padding: 8px 0;
+    color: #555;
+  }
+
+  .plan-desc {
+    color: #777;
+    min-height: 70px;
+  }
+
+  .subscribe-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: #198754;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: .3s;
+
+  }
+
+  .subscribe-btn:hover {
+    background: #146c43;
+    color: white;
+  }
+
+  @media(max-width:768px) {
+    .plan-price {
+      font-size: 34px;
+    }
+
+  }
+
+</style>
+
+{% endblock %}

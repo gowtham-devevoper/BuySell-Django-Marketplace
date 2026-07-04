@@ -1,0 +1,758 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data">
+
+  {% csrf_token %}
+
+  <div class="container py-5">
+
+    <div class="post-card">
+
+      <!-- Selected Category -->
+
+      <div class="section-box">
+
+        <h5>SELECTED CATEGORY</h5>
+
+        <p>
+        Laptops > {{ subcategory.name }}
+        </p>
+        <a href="{% url 'sell' %}">
+          Change
+        </a>
+
+      </div>
+
+      <!-- laptop Details -->
+
+      <div class="section-box">
+
+        <h5>INCLUDE SOME DETAILS</h5>
+
+        <div class="mb-3">
+
+          <label>Brand <span class="text-danger">*</span></label>
+
+        {{ laptop_form.brand }}
+
+        </div>
+
+        <div class="mb-3">
+
+          <label>Model <span class="text-danger">*</span></label>
+
+          {{ laptop_form.model }}
+
+        </div>
+
+      </div>
+
+      <!-- Product Details -->
+
+      <div class="section-box">
+
+        <h5>AD DETAILS</h5>
+
+        <div class="mb-3">
+          <label>Title</label>
+          {{ product_form.title }}
+        </div>
+
+        <div class="mb-3">
+          <label>Description</label>
+          {{ product_form.description }}
+        </div>
+
+        <div class="mb-3">
+          <label>Price</label>
+          {{ product_form.price }}
+        </div>
+
+      </div>
+
+      <!-- Photos -->
+
+      <div class="section-box">
+
+        <h5>UPLOAD UP TO 10 PHOTOS</h5>
+
+        <input type="file" id="imageInput" name="images" multiple accept="image/*" hidden>
+
+        <div class="photo-grid" onclick="document.getElementById('imageInput').click()">
+
+          <div class="upload-box">
+
+            <span class="plus-icon">+</span>
+
+            <p>Add Photos</p>
+
+          </div>
+
+        </div>
+
+        <div id="previewContainer" class="preview-grid mt-3"></div>
+
+      </div>
+
+      <!-- Location -->
+
+      <div class="section-box">
+
+        <h5>LOCATION</h5>
+
+        <div class="mb-3">
+
+          <label>
+            State
+          </label>
+
+          {{ product_form.state }}
+
+        </div>
+
+        <div class="mb-3">
+
+          <label>
+            District
+          </label>
+
+          {{ product_form.district }}
+
+        </div>
+
+      </div>
+
+      <!-- Review -->
+
+      <div class="section-box">
+
+        <h5>REVIEW YOUR DETAILS</h5>
+
+        <div class="seller-card">
+
+          <!-- Profile -->
+
+          <div class="seller-avatar">
+
+            {% if request.user.userprofile.profile_photo %}
+
+            <img src="{{ request.user.userprofile.profile_photo.url }}" alt="Profile">
+
+            {% else %}
+
+            <span>
+              {{ request.user.first_name|first|upper }}
+            </span>
+
+            {% endif %}
+
+          </div>
+
+          <!-- Details -->
+
+          <div class="seller-info">
+
+            <h6>
+              {{ request.user.first_name }}
+            </h6>
+
+            <p>
+              {{ request.user.userprofile.mobile }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <button type="submit" class="btn btn-success w-100">
+        POST NOW
+      </button>
+
+    </div>
+
+  </div>
+
+</form>
+
+<style>
+  .post-card {
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+  }
+
+  .section-box {
+    padding: 30px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .section-box h5 {
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .section-box input,
+  .section-box select,
+  .section-box textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  @media(max-width:768px) {
+
+    .section-box {
+      padding: 20px;
+    }
+
+  }
+
+  /* === FUEL === */
+
+
+  .fuel-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .fuel-options input {
+    display: none;
+  }
+
+  .fuel-options label {
+
+    padding: 12px 20px;
+
+    border: 1px solid #ccc;
+
+    cursor: pointer;
+
+    border-radius: 4px;
+
+    transition: .3s;
+  }
+
+  .fuel-options input:checked+label {
+
+    border: 2px solid #002f34;
+
+    background: #e8f8f8;
+
+    font-weight: 600;
+  }
+
+  /* === transmission === */
+  .transmission-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .transmission-options input {
+    display: none;
+  }
+
+  .transmission-options label {
+
+    padding: 12px 20px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    transition: .3s;
+  }
+
+  .transmission-options input:checked+label {
+
+    border: 2px solid #002f34;
+
+    background: #e8f8f8;
+
+    font-weight: 600;
+  }
+
+  /* === owner === */
+  .owner-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .owner-options input {
+    display: none;
+  }
+
+  .owner-options label {
+
+    padding: 12px 20px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    transition: .3s;
+  }
+
+  .owner-options input:checked+label {
+
+    border: 2px solid #002f34;
+
+    background: #e8f8f8;
+
+    font-weight: 600;
+  }
+
+  /*--- photo ---*/
+
+  .photo-grid {
+
+    width: 140px;
+
+    height: 140px;
+
+    border: 2px dashed #ccc;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    border-radius: 8px;
+
+    transition: .3s;
+  }
+
+  .photo-grid:hover {
+
+    border-color: #002f34;
+  }
+
+  .upload-box {
+
+    text-align: center;
+  }
+
+  .plus-icon {
+
+    font-size: 40px;
+
+    font-weight: bold;
+  }
+
+  .preview-grid {
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(auto-fill, minmax(120px, 1fr));
+
+    gap: 10px;
+  }
+
+  .preview-grid img {
+
+    width: 100%;
+
+    height: 120px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    border: 1px solid #ddd;
+  }
+
+  @media(max-width:768px) {
+
+    .photo-grid {
+
+      width: 120px;
+
+      height: 120px;
+    }
+
+  }
+
+  .image-wrapper {
+
+    position: relative;
+  }
+
+  .image-wrapper img {
+
+    width: 100%;
+
+    height: 120px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    border: 1px solid #ddd;
+  }
+
+  .remove-image {
+
+    position: absolute;
+
+    top: 5px;
+
+    right: 5px;
+
+    width: 25px;
+
+    height: 25px;
+
+    background: red;
+
+    color: white;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    font-weight: bold;
+  }
+
+  /* ===== SELLER DETAILS ===== */
+
+  .seller-card {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 25px;
+  }
+
+  .seller-photo img {
+
+    width: 100px;
+
+    height: 100px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 3px solid #ddd;
+  }
+
+  .seller-info {
+
+    flex: 1;
+  }
+
+  .profile-placeholder {
+
+    width: 100px;
+
+    height: 100px;
+
+    border-radius: 50%;
+
+    background: #198754;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 36px;
+
+    font-weight: 700;
+  }
+
+  /* Tablet */
+
+  @media(max-width:768px) {
+
+    .seller-card {
+
+      gap: 15px;
+    }
+
+    .seller-photo img {
+
+      width: 80px;
+
+      height: 80px;
+    }
+
+  }
+
+  /* Mobile */
+
+  @media(max-width:576px) {
+
+    .seller-card {
+
+      flex-direction: column;
+
+      align-items: center;
+
+      text-align: center;
+    }
+
+    .seller-photo img {
+
+      width: 90px;
+
+      height: 90px;
+    }
+
+    .seller-info {
+
+      width: 100%;
+    }
+
+  }
+
+  .seller-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+  }
+
+  .seller-avatar {
+
+    width: 70px;
+
+    height: 70px;
+
+    border-radius: 50%;
+
+    background: #198754;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    overflow: hidden;
+  }
+
+  .seller-avatar img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+  .seller-info h6 {
+
+    margin: 0;
+
+    font-size: 18px;
+
+    font-weight: 600;
+  }
+
+  .seller-info p {
+
+    margin: 0;
+
+    color: #666;
+  }
+
+  @media(max-width:768px) {
+
+    .seller-avatar {
+
+      width: 60px;
+
+      height: 60px;
+
+      font-size: 24px;
+    }
+
+    .seller-info h6 {
+
+      font-size: 16px;
+    }
+
+  }
+</style>
+
+<!-- location -->
+<script>
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+      const state =
+        document.getElementById(
+          'id_state'
+        );
+
+      const district =
+        document.getElementById(
+          'id_district'
+        );
+
+      state.addEventListener(
+        'change',
+        function () {
+
+          fetch(
+            `/load-districts/?state=${this.value}`
+          )
+
+            .then(
+              response => response.json()
+            )
+
+            .then(data => {
+
+              district.innerHTML =
+                '<option value="">Select District</option>';
+
+              data.forEach(item => {
+
+                district.innerHTML +=
+
+                  `<option value="${item.id}">
+                    ${item.name}
+                </option>`;
+
+              });
+
+            });
+
+        });
+
+    });
+
+</script>
+
+<!-- photo -->
+
+
+<script>
+
+  const imageInput = document.getElementById('imageInput');
+  const previewContainer = document.getElementById('previewContainer');
+
+  let selectedFiles = [];
+
+  imageInput.addEventListener('change', function () {
+
+    const newFiles = Array.from(this.files);
+
+    for (let file of newFiles) {
+
+      if (selectedFiles.length >= 10) {
+        alert('Maximum 10 photos allowed');
+        break;
+      }
+
+      selectedFiles.push(file);
+    }
+
+    updatePreview();
+    updateFileInput();
+
+  });
+
+
+  function updatePreview() {
+
+    previewContainer.innerHTML = '';
+
+    selectedFiles.forEach((file, index) => {
+
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('image-wrapper');
+
+        const img = document.createElement('img');
+        img.src = e.target.result;
+
+        const removeBtn = document.createElement('span');
+        removeBtn.innerHTML = '✕';
+        removeBtn.classList.add('remove-image');
+
+        removeBtn.onclick = function () {
+
+          selectedFiles.splice(index, 1);
+
+          updatePreview();
+
+          updateFileInput();
+
+        };
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(removeBtn);
+
+        previewContainer.appendChild(wrapper);
+
+      };
+
+      reader.readAsDataURL(file);
+
+    });
+
+  }
+
+
+  function updateFileInput() {
+
+    const dt = new DataTransfer();
+
+    selectedFiles.forEach(file => {
+
+      dt.items.add(file);
+
+    });
+
+    imageInput.files = dt.files;
+
+  }
+
+</script>
+
+
+{% endblock %}

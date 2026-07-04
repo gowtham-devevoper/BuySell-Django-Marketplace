@@ -1,0 +1,447 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Seller Header -->
+
+  <div class="seller-header">
+
+    <div class="seller-left">
+
+      <div class="seller-avatar">
+
+        {{ seller.first_name|first|upper }}
+
+      </div>
+
+      <div class="seller-info">
+
+        {% if seller.userprofile.is_premium %}
+        <div class="premium-badge">
+          👑 Premium Seller
+        </div>
+        {% endif %}
+
+        <h2>
+
+          {{ seller.first_name }}
+          {{ seller.last_name }}
+
+        </h2>
+
+        <p class="verified">
+
+          <i class="bi bi-patch-check-fill"></i>
+
+          Verified Seller
+
+        </p>
+
+        <p>
+
+          <i class="bi bi-calendar-check"></i>
+
+          Member Since :
+
+          {{ seller.date_joined|date:"d M Y" }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="seller-right">
+
+      <div class="hidden-number">
+
+        +91 XXXXXXX89
+
+      </div>
+
+      <a href="#" class="btn btn-success w-100 mt-2">
+
+        <i class="bi bi-chat-dots"></i>
+
+        Chat Seller
+
+      </a>
+
+      <a href="#" class="btn btn-outline-dark w-100 mt-2">
+
+        🔒 Unlock Contact
+
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- Stats -->
+
+  <div class="stats-section">
+
+    <div class="stat-card">
+
+      <h3>{{ total_ads }}</h3>
+
+      <p>Total Ads</p>
+
+    </div>
+
+    <div class="stat-card">
+
+      <h3>{{ wishlist_count }}</h3>
+
+      <p>Wishlist</p>
+
+    </div>
+
+    <div class="stat-card">
+
+      <h3>{{ seller.userprofile.rating }}</h3>
+
+      <p>Rating ⭐</p>
+
+    </div>
+
+    <div class="stat-card">
+
+      <h3>{{ seller.userprofile.total_views }}</h3>
+
+      <p>Total Views</p>
+
+    </div>
+
+  </div>
+
+  <!-- About Seller -->
+
+  <div class="about-box">
+
+    <h4>
+
+      About Seller
+
+    </h4>
+
+    <p>
+
+      Trusted BuySell Seller.
+      Check all available ads below.
+
+    </p>
+
+  </div>
+
+  <!-- Seller Products -->
+
+  <div class="mt-4">
+
+    <h3>
+
+      Seller Ads
+
+      ({{ total_ads }})
+
+    </h3>
+
+  </div>
+
+  <div class="row mt-3">
+
+    {% for product in products %}
+
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
+
+      <div class="car-card">
+
+        {% if product.images.first %}
+
+        <img src="{{ product.images.first.image.url }}" class="car-image">
+
+        {% endif %}
+
+        <div class="car-body">
+
+          <h4 class="car-price">
+
+            ₹ {{ product.price|floatformat:0 }}
+
+          </h4>
+
+          {% if product.cardetails %}
+
+          <h5 class="car-title">
+
+            {{ product.cardetails.brand }}
+
+            {{ product.cardetails.model }}
+
+          </h5>
+
+          <p class="car-info">
+
+            {{ product.cardetails.year }}
+
+            •
+
+            {{ product.cardetails.km_driven }} KM
+
+          </p>
+
+          {% endif %}
+
+          <div class="car-footer">
+
+            <span>
+
+              {{ product.district }},
+              {{ product.state }}
+
+            </span>
+
+            <span>
+
+              {{ product.created_at|date:"d M" }}
+
+            </span>
+
+          </div>
+
+          <a href="{% url 'car_product_detail' product.id %}" class="view-btn">
+
+            View Details
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="col-12">
+
+      <div class="alert alert-warning">
+
+        No Ads Found
+
+      </div>
+
+    </div>
+
+    {% endfor %}
+
+  </div>
+
+</div>
+
+<style>
+  body {
+    background: #f2f4f5;
+  }
+
+  .seller-header {
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, .08);
+  }
+
+  .seller-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .seller-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #198754;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: 700;
+  }
+
+  .seller-info h2 {
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .premium-badge {
+    background: linear-gradient(45deg,
+        gold,
+        orange);
+    color: black;
+    padding: 8px 15px;
+    border-radius: 25px;
+    display: inline-block;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .verified {
+    color: #198754;
+    font-weight: 600;
+  }
+
+  .hidden-number {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .stats-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, .08);
+  }
+
+  .stat-card h3 {
+    color: #198754;
+    font-size: 28px;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .stat-card p {
+    margin: 0;
+    color: #666;
+  }
+
+  .last-seen-box {
+    background: white;
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, .08);
+    font-weight: 600;
+  }
+
+  .about-box {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, .08);
+  }
+
+  .car-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    transition: .3s;
+  }
+
+  .car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .08);
+  }
+
+  .car-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+  }
+
+  .car-body {
+    padding: 15px;
+  }
+
+  .car-price {
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  .car-title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .car-info {
+    color: #666;
+  }
+
+  .car-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 15px;
+  }
+
+  .view-btn {
+    display: block;
+    width: 100%;
+    background: #198754;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .view-btn:hover {
+    color: white;
+    background: #146c43;
+  }
+
+  @media(max-width:768px) {
+
+    .seller-header {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .seller-left {
+      flex-direction: column;
+    }
+
+    .seller-right {
+      width: 100%;
+    }
+
+    .stats-section {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .seller-avatar {
+      width: 80px;
+      height: 80px;
+      font-size: 30px;
+    }
+
+    .car-image {
+      height: 180px;
+    }
+
+  }
+</style>
+
+{% endblock %}

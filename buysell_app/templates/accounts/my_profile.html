@@ -1,0 +1,171 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container py-5">
+
+  <div class="profile-card">
+
+    <!-- Profile Image -->
+
+    <div class="profile-image">
+
+      {% if profile.profile_photo %}
+
+      <img src="{{ profile.profile_photo.url }}" alt="Profile">
+
+      {% else %}
+
+      <div class="profile-avatar">
+
+        {{ request.user.first_name|first|upper }}
+
+      </div>
+
+      {% endif %}
+
+    </div>
+
+    <!-- Details -->
+
+    <div class="profile-details">
+
+      <h2>
+
+        {{ request.user.first_name }}
+        {{ request.user.last_name }}
+
+      </h2>
+
+      <p>
+
+        <strong>Email :</strong>
+
+        {{ request.user.email }}
+
+      </p>
+
+      <p>
+
+        <strong>Mobile :</strong>
+
+        {{ profile.mobile }}
+
+      </p>
+
+      <p>
+
+        <strong>Member Since :</strong>
+
+        {{ request.user.date_joined|date:"d M Y" }}
+
+      </p>
+
+      <a href="{% url 'edit_profile' %}" class="btn btn-success">
+
+        Edit Profile
+
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+  body {
+    background: #f2f4f5;
+  }
+
+  .profile-card {
+
+    max-width: 800px;
+
+    margin: auto;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 40px;
+
+    box-shadow: 0 5px 25px rgba(0, 0, 0, .08);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 30px;
+  }
+
+  .profile-image img {
+
+    width: 150px;
+
+    height: 150px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+  }
+
+  .profile-avatar {
+
+    width: 150px;
+
+    height: 150px;
+
+    border-radius: 50%;
+
+    background: #198754;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 60px;
+
+    font-weight: 700;
+  }
+
+  .profile-details h2 {
+
+    margin-bottom: 20px;
+
+    font-weight: 700;
+  }
+
+  .profile-details p {
+
+    margin-bottom: 10px;
+
+    font-size: 16px;
+  }
+
+  @media(max-width:768px) {
+
+    .profile-card {
+
+      flex-direction: column;
+
+      text-align: center;
+
+      padding: 25px;
+    }
+
+    .profile-avatar,
+    .profile-image img {
+
+      width: 120px;
+
+      height: 120px;
+    }
+
+  }
+</style>
+
+{% endblock %}

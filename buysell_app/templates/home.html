@@ -1,0 +1,647 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+  .categories-section {
+    background: white;
+    padding: 12px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+    position: relative;
+  }
+
+  .category-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .category-scroll-btn {
+    border: none;
+    background: #1f8300;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    margin: 0 8px;
+    transition: .4s;
+  }
+
+  .category-scroll-btn:hover {
+    color: #1f8300;
+    background: white;
+    text-align: center;
+  }
+
+  .category-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-evenly;
+
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    flex: 1;
+  }
+
+  .category-item {
+    flex-shrink: 0;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 10px 15px;
+    border-radius: 25px;
+    transition: .3s;
+  }
+
+  .category-item:hover {
+    background: #fbe2a7;
+    color: #165f00;
+  }
+
+  @media (max-width:1175px) {
+    .categories-section {
+      padding: 10px 3%;
+    }
+
+    .category-container {
+      gap: 6px;
+      padding: 0 10px;
+    }
+
+    .category-item {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    .category-scroll-btn {
+      font-size: 16px;
+      width: 25px;
+      height: 25px;
+    }
+
+    @media(max-width:700px) {
+      .category-item {
+        font-size: 12px;
+        padding: 7px 10px;
+      }
+    }
+  }
+
+
+  /* --- Dark Mode --- */
+
+  .white-black {
+    background: #1a1a1a;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, .1);
+  }
+
+  /* category text color */
+  .white-black .category-item {
+    color: white;
+  }
+
+  /* category hover */
+  .white-black .category-item:hover {
+    background: #333;
+    color: #fbe2a7;
+  }
+
+  /* button dark mode */
+  .white-black .category-scroll-btn {
+    background: white;
+    color: black;
+  }
+
+  .white-black .category-scroll-btn:hover {
+    background: #1f8300;
+    color: white;
+  }
+
+
+  /* --- search section ---  */
+  .search-section {
+    padding: 20px 5%;
+    background: #f8f9fa;
+  }
+
+  .search-container {
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    gap: 10px;
+  }
+
+  .search-input {
+    flex: 1;
+    height: 55px;
+    border: 2px solid #ddd;
+    border-radius: 30px;
+    padding: 12px 20px;
+    outline: none;
+  }
+
+  .search-inpit:focus {
+    border-color: #198754;
+  }
+
+  .search-btn {
+    border: none;
+    background: #198754;
+    color: white;
+    padding: 0 25px;
+    border-radius: 30px;
+    font-weight: 600;
+  }
+
+  .search-btn:hover {
+    background: #146c43;
+  }
+
+  @media(max-width:768px) {
+    .search-container {
+      flex-direction: column;
+    }
+
+    .search-btn {
+      height: 50px;
+    }
+  }
+
+  /* ======= Card Page ======== */
+  /* Card */
+
+.car-card{
+
+    background:#fff;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    border:1px solid #e5e5e5;
+
+    transition:.3s;
+
+    height:100%;
+}
+
+.car-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.car-image{
+
+    width:100%;
+
+    height:220px;
+
+    object-fit:cover;
+}
+
+.car-body{
+
+    padding:15px;
+}
+
+.car-price{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#002f34;
+
+    margin-bottom:5px;
+}
+
+.car-title{
+
+    font-size:18px;
+
+    font-weight:600;
+
+    min-height:30px;
+
+    margin-bottom:3px;
+}
+
+.car-info{
+
+    color:#666;
+
+    font-size:14px;
+
+    margin-bottom:5px;
+}
+
+.car-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#777;
+
+    font-size:12px;
+
+    margin-bottom:15px;
+}
+
+
+.view-btn{
+
+    display:block;
+
+    width:100%;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    background:#198754;
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.view-btn:hover{
+
+    background:#146c43;
+
+    color:white;
+}
+
+.wishlist-btn{
+
+    position:absolute;
+
+    top:10px;
+
+    right:10px;
+
+    width:42px;
+
+    height:42px;
+
+    background:white;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-decoration:none;
+
+    color:black;
+
+    font-size:22px;
+
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+
+    z-index:100;
+}
+
+@media(max-width:768px){
+
+    .car-image{
+
+        height:180px;
+    }
+
+    .car-price{
+
+        font-size:22px;
+    }
+
+    .car-title{
+
+        font-size:15px;
+    }
+
+    .view-btn{
+
+        padding:10px;
+    }
+}
+
+/* ===== Bike Card ===== */
+
+.bike-card{
+
+    background:#fff;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    border:1px solid #ddd;
+
+    transition:.3s;
+
+    height:100%;
+
+    position:relative;
+}
+
+.bike-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.bike-image{
+
+    width:100%;
+
+    height:220px;
+
+    object-fit:cover;
+}
+
+.bike-body{
+
+    padding:15px;
+}
+
+.bike-price{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#002f34;
+
+    margin-bottom:8px;
+}
+
+.bike-title{
+
+    font-size:18px;
+
+    font-weight:600;
+
+    margin-bottom:8px;
+}
+
+.bike-info{
+
+    color:#666;
+
+    font-size:14px;
+
+    margin-bottom:5px;
+}
+
+.bike-spec{
+
+    color:#198754;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    margin-bottom:5px;
+}
+
+.bike-owner{
+
+    color:#777;
+
+    font-size:13px;
+
+    margin-bottom:15px;
+}
+
+.bike-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:12px;
+
+    color:#777;
+
+    margin-bottom:15px;
+}
+
+.bike-btn{
+
+    display:block;
+
+    width:100%;
+
+    text-align:center;
+
+    background:#198754;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    font-weight:600;
+}
+
+.bike-btn:hover{
+
+    background:#146c43;
+
+    color:white;
+}
+
+@media(max-width:768px){
+
+    .bike-image{
+
+        height:180px;
+    }
+
+    .bike-price{
+
+        font-size:22px;
+    }
+
+    .bike-title{
+
+        font-size:15px;
+    }
+}
+
+
+  /* --- wishlist code --- */
+
+  .wishlist-btn {
+
+    position: absolute;
+
+    top: 10px;
+
+    right: 10px;
+
+    width: 40px;
+
+    height: 40px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-decoration: none;
+
+    color: black;
+
+    font-size: 22px;
+
+    z-index: 10;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+  }
+
+  .wishlist-btn:hover {
+
+    color: red;
+  }
+</style>
+
+{% include './includes/navbar.html' %}
+
+<!-- All Categories -->
+
+<section class="categories-section" id="dark-light">
+  <div class="category-wrapper">
+    <button class="category-scroll-btn" onclick="scrollLeftBtn()">
+      <i class="bi bi-arrow-left-circle"></i>
+    </button>
+
+    <div class="category-container" id="categoryBox">
+      <a href="{% url 'home' %}" class="category-item">☰ ALL CATEGORIES</a>
+      <a href="?category=cars" class="category-item">Cars</a>
+      <a href="?category=bikes" class="category-item">Bike</a>
+      <a href="?category=houses" class="category-item">
+        For Sale & Rent: Houses & Apartments
+      </a>
+      <a href="?category=mobiles" class="category-item">Mobile</a> 
+      <a href="?category=laptops" class="category-item">Laptop</a>
+    </div>
+
+    <button class="category-scroll-btn" onclick="scrollRightBtn()">
+      <i class="bi bi-arrow-right-circle"></i>
+    </button>
+
+  </div>
+</section>
+
+<!-- Search section -->
+
+<section class="search-section">
+  <form method="GET">
+  
+    <div class="search-container">
+  
+      <input type="text" name="q" value="{{ search }}" placeholder="Search Cars, Bikes, Houses..." class="search-input">
+  
+      <button type="submit" class="search-btn">
+        🔍︎
+      </button>
+  
+    </div>
+  
+  </form>
+  
+</section>
+
+<!-- ------ Card page ------ -->
+
+<div class="container mt-4">
+
+  <div class="row">
+
+    {% for product in products %}
+    
+
+    {% if product.cardetails %}
+    
+    {% include 'includes_cards/car_card.html' %}
+    
+    {% elif product.motorcycledetails %}
+    
+    {% include 'includes_cards/motorcycle_card.html' %}
+
+    {% elif product.scooterdetails %}
+    
+    {% include 'includes_cards/scooter_card.html' %}
+
+    {% elif product.bicycledetails %}
+    
+    {% include 'includes_cards/bicycle_card.html' %}
+
+    {% elif product.houseapartmentdetails %}
+    
+    {% include 'includes_cards/house_card.html' %}
+
+    {% elif product.mobiledetails %}
+    
+    {% include 'includes_cards/mobile_card.html' %}
+
+    {% elif product.laptopdetails %}
+    
+    {% include 'includes_cards/laptop_card.html' %}
+    
+    {% endif %}
+  
+    
+    {% endfor %}
+
+  </div>
+
+</div>
+
+
+
+<script>
+
+  let box = document.getElementById('categoryBox');
+  function scrollLeftBtn() {
+    box.scrollLeft -= 200;
+  }
+  function scrollRightBtn() {
+    box.scrollLeft += 200;
+  }
+  function darkLight() {
+    let dark = document.getElementById('dark-light');
+    dark.classList.toggle('white-black')
+  }
+
+</script>
+
+
+{% endblock %}

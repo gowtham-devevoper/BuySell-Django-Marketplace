@@ -1,0 +1,220 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container py-4">
+
+  <div class="notification-wrapper">
+
+    <div class="notification-header">
+
+      <h2>🔔 Notifications</h2>
+
+      <span>{{ notifications|length }} Notifications</span>
+
+    </div>
+
+    {% if notifications %}
+
+    {% for notification in notifications %}
+
+    <div class="notification-card">
+
+      <div class="notification-icon">
+
+        🔓
+
+      </div>
+
+      <div class="notification-content">
+
+        <h5>
+
+          {{ notification.title }}
+
+        </h5>
+
+        <p>
+
+          {{ notification.message }}
+
+        </p>
+
+        <small>
+
+          {{ notification.created_at|timesince }} ago
+
+        </small>
+
+      </div>
+
+    </div>
+
+    {% endfor %}
+
+    {% else %}
+
+    <div class="empty-box">
+
+      <h3>
+
+        🔔 No Notifications
+
+      </h3>
+
+      <p>
+
+        You're all caught up.
+
+      </p>
+
+    </div>
+
+    {% endif %}
+
+  </div>
+
+</div>
+
+<style>
+  .notification-wrapper {
+
+    max-width: 900px;
+
+    margin: auto;
+
+  }
+
+  .notification-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+
+  }
+
+  .notification-header h2 {
+
+    font-weight: 700;
+
+  }
+
+  .notification-card {
+
+    display: flex;
+
+    gap: 20px;
+
+    align-items: flex-start;
+
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    margin-bottom: 18px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+
+    transition: .3s;
+
+  }
+
+  .notification-card:hover {
+
+    transform: translateY(-3px);
+
+  }
+
+  .notification-icon {
+
+    width: 60px;
+
+    height: 60px;
+
+    border-radius: 50%;
+
+    background: #198754;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 28px;
+
+  }
+
+  .notification-content {
+
+    flex: 1;
+
+  }
+
+  .notification-content h5 {
+
+    margin-bottom: 8px;
+
+    font-weight: 700;
+
+  }
+
+  .notification-content p {
+
+    color: #555;
+
+    margin-bottom: 6px;
+
+  }
+
+  .notification-content small {
+
+    color: #888;
+
+  }
+
+  .empty-box {
+
+    background: white;
+
+    border-radius: 15px;
+
+    padding: 60px;
+
+    text-align: center;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+
+  }
+
+  @media(max-width:768px) {
+
+    .notification-card {
+
+      flex-direction: column;
+
+      align-items: center;
+
+      text-align: center;
+
+    }
+
+    .notification-header {
+
+      flex-direction: column;
+
+      gap: 10px;
+
+    }
+
+  }
+</style>
+
+{% endblock %}

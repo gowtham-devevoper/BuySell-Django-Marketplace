@@ -1,0 +1,516 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container py-4">
+
+  <!-- Breadcrumb -->
+
+  <div class="breadcrumb-box">
+
+    <a href="{% url 'home' %}">
+      Home
+    </a>
+
+    <i class="bi bi-chevron-right"></i>
+
+    <span>
+      Scooters
+    </span>
+
+    <i class="bi bi-chevron-right"></i>
+
+    <span class="active-page">
+
+      {{ product.scooterdetails.brand }}
+      {{ product.scooterdetails.model }}
+
+    </span>
+
+  </div>
+
+  <div class="row g-4">
+
+    <!-- LEFT SIDE -->
+
+    <div class="col-lg-8">
+
+      <!-- Image Slider -->
+
+      <div class="slider-card">
+
+        <div id="carSlider" class="carousel slide" data-bs-ride="carousel">
+
+          <div class="carousel-inner">
+
+            {% for image in product.images.all %}
+
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+
+              <img src="{{ image.image.url }}" class="d-block w-100 detail-image">
+
+            </div>
+
+            {% endfor %}
+
+          </div>
+
+          <button class="carousel-control-prev" type="button" data-bs-target="#carSlider" data-bs-slide="prev">
+
+            <span class="carousel-control-prev-icon"></span>
+
+          </button>
+
+          <button class="carousel-control-next" type="button" data-bs-target="#carSlider" data-bs-slide="next">
+
+            <span class="carousel-control-next-icon"></span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- Product Info -->
+
+      <div class="info-card mt-3">
+
+        <h2>
+
+          {{ product.scooterdetails.brand }}
+          {{ product.scooterdetails.model }}
+
+          ({{ product.scooterdetails.year }})
+
+        </h2>
+
+        <hr>
+
+        <!-- SPECE SECTION -->
+
+        <div class="specs">
+        
+          <span>
+            <i class="bi bi-fuel-pump-fill"></i>
+            {{ product.scooterdetails.fuel }}
+          </span>
+        
+          <span>
+            <i class="bi bi-speedometer2"></i>
+            {{ product.scooterdetails.km_driven }} KM
+          </span>
+        
+          <span>
+            <i class="bi bi-person-fill"></i>
+            {{ product.scooterdetails.owner }} Owner
+          </span>
+        
+        </div>
+
+      </div>
+
+      <!-- Overview -->
+
+      <div class="overview-box">
+      
+        <div class="over-item">
+          <i class="bi bi-person-vcard"></i>
+          <b>Owner</b>
+          {{ product.scooterdetails.get_owner_display }}
+        </div>
+      
+        <div class="over-item">
+          <i class="bi bi-fuel-pump-fill"></i>
+          <b>Fuel</b>
+          {{ product.scooterdetails.fuel }}
+        </div>
+      
+        <div class="over-item">
+          <i class="bi bi-shield-check"></i>
+          <b>Insurance</b>
+          {{ product.scooterdetails.insurance_type }}
+        </div>
+      
+        <div class="over-item">
+          <i class="bi bi-calendar-event"></i>
+          <b>Insurance Expiry</b>
+          {{ product.scooterdetails.insurance_expiry|date:"d M Y"|default:"Not Available" }}
+        </div>
+      
+        <div class="over-item">
+          <i class="bi bi-geo-alt"></i>
+          <b>Location</b>
+          {{ product.district }},
+          {{ product.state }}
+        </div>
+      
+        <div class="over-item">
+          <i class="bi bi-calendar-check"></i>
+          <b>Posted Date</b>
+          {{ product.created_at|date:"d M Y" }}
+        </div>
+      
+      </div>
+
+      <!-- Description -->
+
+      <div class="info-card mt-3">
+
+        <h4>
+          Description
+        </h4>
+
+        <hr>
+
+        <p class="desc-text">
+
+          {{ product.description }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="col-lg-4">
+
+      <div class="seller-card">
+
+        <div class="price-box">
+
+          ₹ {{ product.price }}
+
+        </div>
+
+        <hr>
+
+
+
+        <a href="{% url 'seller_profile' product.seller.id %}" class="seller-profile">
+          {{ product.seller.first_name|first|upper }}
+        </a>
+
+
+        <div class="seller-name mt-3">
+
+          {{ product.seller.first_name }}
+          {{ product.seller.last_name }}
+
+        </div>
+
+        <p class="verify">
+
+          <i class="bi bi-patch-check-fill"></i>
+
+          Verified Seller
+
+        </p>
+
+        <!-- -- Unlock Contact -- -->
+        
+        {% if user == product.seller %}
+        
+        <div class="contact-hide">
+        
+          +91 {{ product.seller.userprofile.mobile }}
+        
+        </div>
+        
+        {% elif user.is_authenticated %}
+        
+        {% if unlocked %}
+        
+        <div class="contact-hide">
+        
+          +91 {{ product.seller.userprofile.mobile }}
+        
+        </div>
+        
+        {% else %}
+        
+        <div class="contact-hide">
+        
+          +91 **********
+        
+        </div>
+        
+        <a href="{% url 'unlock_contact' product.id %}" class="btn unlock-btn w-100 mt-3">
+        
+          🔓 Unlock Contact
+        
+        </a>
+        
+        {% endif %}
+        
+        {% else %}
+        
+        <div class="contact-hide">
+        
+          +91 **********
+        
+        </div>
+        
+        <a href="{% url 'login' %}" class="btn unlock-btn w-100 mt-3">
+        
+          Login to Unlock
+        
+        </a>
+        
+        {% endif %}
+        
+        
+        <!-- --- Chat system --- -->
+        
+        {% if user.is_authenticated and user != product.seller %}
+        
+        <a href="{% url 'start_chat' product.id %}" class="btn btn-outline-dark chat-btn w-100 mt-2">
+        
+          <i class="bi bi-chat-dots"></i>
+        
+          Chat Seller
+        
+        </a>
+        
+        {% elif not user.is_authenticated %}
+        
+        <a href="{% url 'login' %}" class="btn btn-outline-dark chat-btn w-100 mt-2">
+        
+          Login to Chat
+        
+        </a>
+        
+        {% endif %}
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+  body {
+    background: #f2f4f5;
+  }
+
+  /* Breadcrumb */
+
+  .breadcrumb-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  .breadcrumb-box a {
+    text-decoration: none;
+    color: #406367;
+  }
+
+  .active-page {
+    color: #002f34;
+    font-weight: 700;
+  }
+
+  /* Slider */
+
+  .slider-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+  }
+
+  .detail-image {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+  }
+
+  /* Info Card */
+
+  .info-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 25px;
+  }
+
+  .info-card h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #002f34;
+  }
+
+  .specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .specs span {
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .specs i {
+    color: #198754;
+  }
+
+  /* Overview */
+
+  .overview-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+
+  .over-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .over-item i {
+    color: #198754;
+    font-size: 20px;
+  }
+
+  .over-item b {
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 5px;
+  }
+
+  /* Description */
+
+  .desc-text {
+    line-height: 1.9;
+    color: #555;
+  }
+
+  /* Seller */
+
+  .seller-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    position: sticky;
+    top: 20px;
+  }
+
+  .price-box {
+    font-size: 34px;
+    font-weight: 700;
+    color: #002f34;
+  }
+
+  .seller-profile {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #198754;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-size: 38px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: .3s;
+  }
+
+  .seller-profile:hover {
+    transform: scale(1.08);
+    color: white;
+  }
+
+  .seller-name {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .verify {
+    color: #198754;
+    font-weight: 600;
+  }
+
+  .contact-hide {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .unlock-btn {
+    background: #198754;
+    border: none;
+    height: 52px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .unlock-btn:hover {
+    background: #146c43;
+  }
+
+  .chat-btn {
+    height: 52px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  /* Mobile */
+
+  @media(max-width:992px) {
+
+    .seller-card {
+      position: relative;
+      top: 0;
+    }
+
+    .detail-image {
+      height: 350px;
+    }
+
+  }
+
+  @media(max-width:768px) {
+
+    .detail-image {
+      height: 250px;
+    }
+
+    .info-card {
+      padding: 18px;
+    }
+
+    .info-card h2 {
+      font-size: 24px;
+    }
+
+    .price-box {
+      font-size: 28px;
+    }
+
+    .overview-box {
+      grid-template-columns: 1fr;
+    }
+
+    .specs span {
+      width: 100%;
+    }
+
+  }
+</style>
+
+{% endblock %}
